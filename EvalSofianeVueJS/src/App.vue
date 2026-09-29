@@ -71,3 +71,73 @@ function supprimerImage(id) {
     </ul>
   </main>
 </template>
+
+<style scoped>
+.galerie-app {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 1rem;
+}
+
+.formulaire {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.formulaire input {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.erreur {
+  color: #d33;
+  margin-top: 0.5rem;
+}
+
+.total {
+  margin: 1rem 0;
+  font-weight: bold;
+}
+
+.vide {
+  font-style: italic;
+  color: #888;
+}
+
+.galerie {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.vignette {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vignette img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.supprimer {
+  width: 100%;
+}
+</style>
