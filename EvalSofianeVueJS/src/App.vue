@@ -7,6 +7,8 @@ const images = ref([])
 
 const erreur = ref('')
 
+const chargement = ref(false)
+
 let prochainId = 1
 
 const totalImages = computed(() => images.value.length)
@@ -20,7 +22,26 @@ function estUrlValide(texte) {
   }
 }
 
-function ajouterImage() {
+function chargerImage(url) {
+  return new Promise((resolve) => {
+    const img = new Image()
+    const delai = setTimeout(() => resolve(false), 8000)
+
+    img.onload = () => {
+      clearTimeout(delai)
+      resolve(img.naturalWidth > 0)
+    }
+    img.onerror = () => {
+      clearTimeout(delai)
+      resolve(false)
+    }
+    img.src = url
+  })
+}
+
+async function ajouterImage() {
+  if (chargement.value) return
+
   const url = nouvelleUrl.value.trim()
 
   if (url === '') {
@@ -30,6 +51,21 @@ function ajouterImage() {
 
   if (!estUrlValide(url)) {
     erreur.value = "L'URL saisie n'est pas valide (elle doit commencer par http:// ou https://)."
+    return
+  }
+
+  if (images.value.some((image) => image.url === url)) {
+    erreur.value = 'Cette image est déjà dans la galerie.'
+    return
+  }
+
+  erreur.value = ''
+  chargement.value = true
+  const estUneImage = await chargerImage(url)
+  chargement.value = false
+
+  if (!estUneImage) {
+    erreur.value = "Aucune image n'a pu être chargée à cette adresse."
     return
   }
 
@@ -54,7 +90,9 @@ function supprimerImage(id) {
         placeholder="URL de l'image (https://...)"
         aria-label="URL de l'image"
       />
-      <button type="submit">Ajouter</button>
+      <button type="submit" :disabled="chargement">
+        {{ chargement ? 'Vérification...' : 'Ajouter' }}
+      </button>
     </form>
 
     <p v-if="erreur" class="erreur">{{ erreur }}</p>
@@ -97,6 +135,11 @@ button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.6;
 }
 
 .erreur {
