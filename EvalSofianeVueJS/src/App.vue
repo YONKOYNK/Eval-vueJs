@@ -36,7 +36,9 @@ function supprimerImage(id) {
     </form>
 
     <p class="total">Total d'images : {{ totalImages }}</p>
-    <ul class="galerie">
+    <p v-if="totalImages === 0" class="vide">Aucune image ajoutée</p>
+
+    <ul v-else class="galerie">
       <li v-for="image in images" :key="image.id" class="vignette">
         <img :src="image.url" alt="Image de la galerie" />
         <button class="supprimer" @click="supprimerImage(image.id)">Supprimer</button>
