@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const nouvelleUrl = ref('')
 
 const images = ref([])
 
 let prochainId = 1
+
+const totalImages = computed(() => images.value.length)
 
 function ajouterImage() {
   const url = nouvelleUrl.value.trim()
@@ -32,6 +34,8 @@ function supprimerImage(id) {
       />
       <button type="submit">Ajouter</button>
     </form>
+
+    <p class="total">Total d'images : {{ totalImages }}</p>
     <ul class="galerie">
       <li v-for="image in images" :key="image.id" class="vignette">
         <img :src="image.url" alt="Image de la galerie" />
