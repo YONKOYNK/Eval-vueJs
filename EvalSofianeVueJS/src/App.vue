@@ -2,13 +2,24 @@
 import { ref } from 'vue'
 
 const nouvelleUrl = ref('')
+
+const images = ref([])
+
+let prochainId = 1
+
+function ajouterImage() {
+  const url = nouvelleUrl.value.trim()
+
+  images.value.push({ id: prochainId++, url })
+  nouvelleUrl.value = ''
+}
 </script>
 
 <template>
   <main class="galerie-app">
     <h1>Galerie d'images</h1>
 
-    <form class="formulaire">
+    <form class="formulaire" @submit.prevent="ajouterImage">
       <input
         v-model="nouvelleUrl"
         type="text"
