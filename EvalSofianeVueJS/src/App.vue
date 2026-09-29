@@ -13,6 +13,10 @@ function ajouterImage() {
   images.value.push({ id: prochainId++, url })
   nouvelleUrl.value = ''
 }
+
+function supprimerImage(id) {
+  images.value = images.value.filter((image) => image.id !== id)
+}
 </script>
 
 <template>
@@ -31,6 +35,7 @@ function ajouterImage() {
     <ul class="galerie">
       <li v-for="image in images" :key="image.id" class="vignette">
         <img :src="image.url" alt="Image de la galerie" />
+        <button class="supprimer" @click="supprimerImage(image.id)">Supprimer</button>
       </li>
     </ul>
   </main>
