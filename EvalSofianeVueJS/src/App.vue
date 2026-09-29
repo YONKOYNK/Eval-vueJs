@@ -28,5 +28,10 @@ function ajouterImage() {
       />
       <button type="submit">Ajouter</button>
     </form>
+    <ul class="galerie">
+      <li v-for="image in images" :key="image.id" class="vignette">
+        <img :src="image.url" alt="Image de la galerie" />
+      </li>
+    </ul>
   </main>
 </template>
