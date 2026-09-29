@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import VignetteImage from './components/VignetteImage.vue'
+import GalerieImages from './components/GalerieImages.vue'
 
 const nouvelleUrl = ref('')
 
@@ -100,16 +100,7 @@ function supprimerImage(id) {
 
     <p class="total">Total d'images : {{ totalImages }}</p>
 
-    <p v-if="totalImages === 0" class="vide">Aucune image ajoutée</p>
-
-    <ul v-else class="galerie">
-      <VignetteImage
-        v-for="image in images"
-        :key="image.id"
-        :image="image"
-        @supprimer="supprimerImage"
-      />
-    </ul>
+    <GalerieImages :images="images" @supprimer="supprimerImage" />
   </main>
 </template>
 
@@ -142,18 +133,5 @@ h1 {
 .total {
   margin: 1rem 0;
   font-weight: bold;
-}
-
-.vide {
-  font-style: italic;
-  color: #888;
-}
-
-.galerie {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
 }
 </style>
