@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
+import VignetteImage from './components/VignetteImage.vue'
 
 const nouvelleUrl = ref('')
 
@@ -102,10 +103,12 @@ function supprimerImage(id) {
     <p v-if="totalImages === 0" class="vide">Aucune image ajoutée</p>
 
     <ul v-else class="galerie">
-      <li v-for="image in images" :key="image.id" class="vignette">
-        <img :src="image.url" alt="Image de la galerie" />
-        <button class="supprimer" @click="supprimerImage(image.id)">Supprimer</button>
-      </li>
+      <VignetteImage
+        v-for="image in images"
+        :key="image.id"
+        :image="image"
+        @supprimer="supprimerImage"
+      />
     </ul>
   </main>
 </template>
@@ -131,17 +134,6 @@ h1 {
   font-size: 1rem;
 }
 
-button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-button:disabled {
-  cursor: wait;
-  opacity: 0.6;
-}
-
 .erreur {
   color: #d33;
   margin-top: 0.5rem;
@@ -163,24 +155,5 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
-}
-
-.vignette {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.vignette img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.supprimer {
-  width: 100%;
 }
 </style>

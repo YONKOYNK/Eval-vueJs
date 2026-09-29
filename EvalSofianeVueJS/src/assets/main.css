@@ -6,3 +6,14 @@
   padding: 2rem;
   font-weight: normal;
 }
+
+button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
